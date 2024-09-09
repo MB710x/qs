@@ -213,18 +213,21 @@ function createQuestionList() {
     sortedQuestions.forEach((q, index) => {
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question");
-        questionDiv.innerHTML = `<h3>Question ${index + 1}: ${q.question}</h3>`;
+        questionDiv.innerHTML = `<h3>${q.question}</h3>`;
         
         const answersDiv = document.createElement("div");
         answersDiv.classList.add("answers");
+        answersDiv.style.display = "none"; // Hide answers by default
         
         q.answers.forEach((answer, answerIndex) => {
             const answerDiv = document.createElement("div");
             answerDiv.classList.add("answer");
             if (answer.correct) {
                 answerDiv.classList.add("correct");
+                answerDiv.innerHTML = `<span class="tick-mark">✓</span> ${String.fromCharCode(97 + answerIndex)}) ${answer.text}`;
+            } else {
+                answerDiv.textContent = `${String.fromCharCode(97 + answerIndex)}) ${answer.text}`;
             }
-            answerDiv.textContent = `${String.fromCharCode(97 + answerIndex)}) ${answer.text}`;
             answersDiv.appendChild(answerDiv);
         });
         
