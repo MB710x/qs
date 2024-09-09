@@ -14,7 +14,12 @@ const questions = [
 function createQuestionList() {
     const questionList = document.getElementById("question-list");
     
-    questions.forEach((q, index) => {
+    // Sort questions alphabetically
+    const sortedQuestions = questions.sort((a, b) => 
+        a.question.localeCompare(b.question)
+    );
+    
+    sortedQuestions.forEach((q, index) => {
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question");
         questionDiv.innerHTML = `<h3>Question ${index + 1}: ${q.question}</h3>`;
@@ -25,10 +30,14 @@ function createQuestionList() {
         q.answers.forEach(answer => {
             const answerDiv = document.createElement("div");
             answerDiv.classList.add("answer");
+            answerDiv.textContent = answer;
+            
+            // Add this check to ensure the correct class is applied
             if (answer === q.correctAnswer) {
                 answerDiv.classList.add("correct");
+                console.log("Correct answer:", answer); // For debugging
             }
-            answerDiv.textContent = answer;
+            
             answersDiv.appendChild(answerDiv);
         });
         
@@ -42,3 +51,6 @@ function createQuestionList() {
 }
 
 document.addEventListener("DOMContentLoaded", createQuestionList);
+
+// Add this line for debugging
+console.log("Script loaded and executed");
