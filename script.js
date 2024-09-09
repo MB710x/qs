@@ -205,11 +205,18 @@ const questions = [
 function createQuestionList() {
     const questionList = document.getElementById("question-list");
     
-    // Sort questions alphabetically
+    // Sort questions alphabetically (case-insensitive)
     const sortedQuestions = questions.sort((a, b) => 
-        a.question.localeCompare(b.question)
+        a.question.localeCompare(b.question, undefined, {sensitivity: 'base'})
     );
     
+    // Create collapse all button
+    const collapseAllButton = document.createElement("button");
+    collapseAllButton.textContent = "Collapse All";
+    collapseAllButton.id = "collapse-all";
+    collapseAllButton.addEventListener("click", collapseAllAnswers);
+    questionList.parentNode.insertBefore(collapseAllButton, questionList);
+
     sortedQuestions.forEach((q, index) => {
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question");
@@ -219,24 +226,35 @@ function createQuestionList() {
         answersDiv.classList.add("answers");
         answersDiv.style.display = "none"; // Hide answers by default
         
-        q.answers.forEach((answer, answerIndex) => {
+        // Sort answers to put correct ones first
+        const sortedAnswers = q.answers.sort((a, b) => b.correct - a.correct);
+        
+        sortedAnswers.forEach((answer) => {
             const answerDiv = document.createElement("div");
             answerDiv.classList.add("answer");
             if (answer.correct) {
                 answerDiv.classList.add("correct");
-                answerDiv.innerHTML = `<span class="tick-mark">✓</span> ${String.fromCharCode(97 + answerIndex)}) ${answer.text}`;
+                answerDiv.innerHTML = `<span class="tick-mark">✓</span> ${answer.text}`;
             } else {
-                answerDiv.textContent = `${String.fromCharCode(97 + answerIndex)}) ${answer.text}`;
+                answerDiv.textContent = answer.text;
             }
             answersDiv.appendChild(answerDiv);
         });
         
         questionDiv.appendChild(answersDiv);
-        questionDiv.addEventListener("click", () => {
+        questionDiv.addEventListener("click", (event) => {
+            if (event.target.tagName !== 'H3') return;
             answersDiv.style.display = answersDiv.style.display === "none" ? "block" : "none";
         });
         
         questionList.appendChild(questionDiv);
+    });
+}
+
+function collapseAllAnswers() {
+    const allAnswers = document.querySelectorAll('.answers');
+    allAnswers.forEach(answers => {
+        answers.style.display = "none";
     });
 }
 
