@@ -1,16 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Questions</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Exam Questions</h1>
-        <div id="question-list"></div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.question {
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.question h3 {
+    margin: 0;
+}
+
+.answers {
+    margin-top: 10px;
+}
+
+.answer {
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.correct {
+    background-color: #90EE90;
+}
+
+.tick-mark {
+    color: #008000;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
+}
